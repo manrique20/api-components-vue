@@ -1,13 +1,8 @@
 import 'dotenv/config.js';
-import { NestFactory } from '@nestjs/core';
-import { AppModule, ObserveInstrument } from './app.module.js';
-import { ValidationPipe } from '@nestjs/common';
+import { createApp } from './create-app.js';
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    instrument: ObserveInstrument,
-  });
-  app.enableCors({ origin: 'http://localhost:5173'});
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true}));
+  const app = await createApp();
   await app.listen(process.env.PORT ?? 3000);
 }
 await bootstrap();
